@@ -2,8 +2,16 @@ import init
 import sys
 import pandas as pd
 import sqlalchemy
+import os
 
 TABLE_NAME = "Cards"
+
+db_user = os.getenv('db_user')
+db_pass = os.getenv('db_pass')
+db_name = os.getenv('db_name')
+db_host = os.getenv('db_host')
+db_port = os.getenv('db_port')
+
 
 def create_database():
   if not init.data_exists():
@@ -25,7 +33,17 @@ def _create_database():
       'typeline': 'str'
   },
   errors='ignore')
-  engine = sqlalchemy.create_engine("sqlite+pysqlite:///:memory:", echo=True)
+
+  url = sqlalchemy.URL.create(
+      "postgresql+psycopg",
+      username=db_user,
+      password=db_pass,
+      host=db_host,
+      port=db_port,
+      database=db_name,
+  )
+
+  engine = sqlalchemy.create_engine(url=url, echo=True)
   metadata_obj = sqlalchemy.MetaData()
   table = sqlalchemy.Table(TABLE_NAME, metadata_obj,
                            sqlalchemy.Column("index", sqlalchemy.Integer, primary_key=True),
