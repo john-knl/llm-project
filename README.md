@@ -4,6 +4,8 @@
 
 Mechanisms are rudimentary; accuracy of model is not guaranteed
 
+To set up VLLM, read my [article](https://www.linkedin.com/pulse/deploy-local-llm-linux-vllm-rocm-khoi-nguyen-le-dhe2e/)
+
 install requirements with
 ```
 pip install -r requirements.txt
